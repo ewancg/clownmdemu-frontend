@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.19)
 project(clownmdemu-frontend-qt LANGUAGES CXX)
 
+cmake_path(SET ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+cmake_path(GET ROOT_DIR PARENT_PATH PARENT_DIR)
+cmake_path(APPEND LIBS_DIR "${PARENT_DIR}" "libraries")
+
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core OpenGL OpenGLWidgets Widgets)
 
 qt_standard_project_setup()
@@ -48,7 +52,7 @@ if(WIN32)
 	target_sources(clownmdemu-frontend-qt PRIVATE "../assets/clownmdemu.rc")
 endif()
 
-add_subdirectory("../common" EXCLUDE_FROM_ALL "common")
+add_subdirectory("${PARENT_DIR}/common" EXCLUDE_FROM_ALL "common")
 target_link_libraries(clownmdemu-frontend-qt PRIVATE clownmdemu-frontend-common)
 
 # Link SDL
@@ -58,14 +62,15 @@ if(SDL3_FOUND)
 else()
 	set(SDL_STATIC ON)
 	set(SDL_SHARED OFF)
-	add_subdirectory("../libraries/SDL" EXCLUDE_FROM_ALL "SDL")
+	add_subdirectory("${LIBS_DIR}/SDL" EXCLUDE_FROM_ALL "SDL")
 	target_link_libraries(clownmdemu-frontend-qt PRIVATE SDL3::SDL3-static)
 endif()
+target_include_directories(clownmdemu-frontend-qt PUBLIC "${LIBS_DIR}/SDL/include")
 
 # Link fmt (needed for Ubuntu 22.04, which lacks std::format)
 find_package(fmt 8.0.0)
 if(NOT fmt_FOUND)
-	add_subdirectory("../libraries/fmt" EXCLUDE_FROM_ALL)
+	add_subdirectory("${LIBS_DIR}/fmt" EXCLUDE_FROM_ALL "FMT")
 endif()
 target_link_libraries(clownmdemu-frontend-qt PRIVATE fmt::fmt)
 

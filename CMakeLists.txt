@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.16.3)
 
+# Allows language servers like clangd to use CMake-defined info during
+# analysis, basically required for complete integration with most IDEs
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# No test
+set(CMAKE_SKIP_TEST_ALL_DEPENDENCY ON)
+
+cmake_path(SET ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+cmake_path(APPEND LIBS_DIR "${ROOT_DIR}" "libraries")
+
 option(CLOWNMDEMU_FRONTEND_FREETYPE "Use FreeType font rasteriser instead of stb_truetype for Dear ImGui" OFF)
 
 project(clownmdemu-frontend LANGUAGES C CXX)
@@ -166,9 +176,10 @@ if(SDL3_FOUND)
 else()
 	set(SDL_STATIC ON)
 	set(SDL_SHARED OFF)
-	add_subdirectory("libraries/SDL" EXCLUDE_FROM_ALL)
+	add_subdirectory("${LIBS_DIR}/SDL" EXCLUDE_FROM_ALL "SDL")
 	target_link_libraries(clownmdemu SDL3::SDL3-static)
 endif()
+target_include_directories(clownmdemu PUBLIC "${LIBS_DIR}/SDL/include")
 
 if(CLOWNMDEMU_FRONTEND_FREETYPE)
 	# Link FreeType

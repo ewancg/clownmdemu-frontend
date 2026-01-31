@@ -1,16 +1,13 @@
-[submodule "frontend/libraries/SDL"]
+[submodule "libraries/SDL"]
 	path = libraries/SDL
 	url = https://github.com/libsdl-org/SDL.git
-[submodule "frontend/freetype"]
+[submodule "libraries/freetype"]
 	path = libraries/freetype
 	url = https://gitlab.freedesktop.org/freetype/freetype.git
-[submodule "frontend/libraries/imgui"]
+[submodule "libraries/imgui"]
 	path = libraries/imgui
 	url = https://github.com/Clownacy/imgui.git
 	branch = font-nonlinear
-[submodule "clownmdemu-frontend-common"]
-	path = common
-	url = https://github.com/Clownacy/clownmdemu-frontend-common
 [submodule "libraries/emscripten-browser-file"]
 	path = libraries/emscripten-browser-file
 	url = https://github.com/Armchair-Software/emscripten-browser-file
@@ -20,3 +17,9 @@
 [submodule "libraries/Lyra"]
 	path = libraries/Lyra
 	url = https://github.com/bfgroup/Lyra
+[submodule "libraries/tinyfiledialogs"]
+	path = libraries/tinyfiledialogs
+	url = https://github.com/jfolker/tinyfiledialogs
+[submodule "clownmdemu-frontend-common"]
+	path = common
+	url = https://github.com/Clownacy/clownmdemu-frontend-common

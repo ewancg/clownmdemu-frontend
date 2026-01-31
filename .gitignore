@@ -74,9 +74,19 @@ CMakeLists.txt.user*
 *.exe
 
 # Directories with generated files
-.moc/
+# --------
+/build*/
 .obj/
 .pch/
+
+# Qt build process
+.moc/
 .rcc/
 .uic/
-/build*/
+
+# clangd stores its index here
+.cache/
+
+# Nix
+.direnv/
+result/
